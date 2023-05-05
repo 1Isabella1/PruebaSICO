@@ -11,6 +11,16 @@
     <td mat-cell *matCellDef="let curso"> {{curso.descripcion}} </td>
   </ng-container>
 
+
+  <ng-container matColumnDef="eliminar">
+    <th mat-header-cell *matHeaderCellDef> Eliminar </th>
+    <td mat-cell *matCellDef="let curso"> {{curso.eliminar}}
+      <button type="button" class="btn-close" aria-label="Close"(click)="borrar(curso.nombreCurso)"></button>
+    </td>
+    
+  </ng-container>
+
+
   <tr mat-header-row *matHeaderRowDef="columnasC"></tr>
   <tr mat-row *matRowDef="let rowC; columns: columnasC;"></tr>
 </table>
@@ -19,19 +29,9 @@
 <div class="contenedor">
 
   <select [(ngModel)]="cursoselect" class="form-select" aria-label="listaCursos">
-    <option selected>Selecciona Curso</option>
-    <option *ngFor="let curso of datosC" [value]="curso">{{curso.nombreCurso}}</option>
+    <option *ngFor="let curso of listacursos" [value]="[curso.nombreCurso,curso.descripcion]">{{curso.nombreCurso}}</option>
   </select>
 
   <button mat-raised-button color="primary" (click)="agregar()">Agregar</button>
-
-  <!--<mat-form-field>
-     <input matInput [(ngModel)]="cursoselect.nombreCurso" type="text" placeholder="Seleccione curso">
-   </mat-form-field>
-
-   <mat-form-field>
-     <input matInput [(ngModel)]="cursoselect.descripcion" type="text" placeholder="Descripción">
-   </mat-form-field>-->
-
 </div>
-{{cursoselect.nombreCurso}}
+
