@@ -1,9 +1,8 @@
 {
   "ExpandedNodes": [
-    "",
     "\\src",
-    "\\src\\app"
+    "\\src\\app",
+    "\\src\\app\\cursos"
   ],
-  "SelectedNode": "\\package.json",
   "PreviewInSolutionExplorer": false
 }

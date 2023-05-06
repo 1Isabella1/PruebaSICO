@@ -37,7 +37,9 @@ export class CursosComponent implements AfterViewInit {
 
   agregar() {
     const str = new String(this.cursoselect).split(',')
-    this.datosC.map(x => x.nombreCurso == str[0] ? alert("Repetido") : this.datosC.push(new Curso(str[0], str[1])));
+    let repetido = true;
+    this.datosC.map(x => x.nombreCurso.includes(str[0]) && (repetido = false))
+    repetido && this.datosC.push(new Curso(str[0], str[1]));
     this.tabla2.renderRows();
   }
 
