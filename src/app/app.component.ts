@@ -9,6 +9,8 @@ import { MatTable } from '@angular/material/table';
 
 export class AppComponent {
 
+  
+
   IdEstudiante: any;
 
   columnas: string[] = ['identificacion', 'nombre', 'apellido', 'cursos'];
