@@ -15,12 +15,9 @@ export class ApiService {
 
   //funciones de listar
 
-
-
   //Funciones para tabla relacion
 
-  public getPosts() {
-    let endPoints = ""
+  public getPosts(endPoints: any) {
     this.httpClient.get(this.url + endPoints).subscribe(data => {
       console.log(data);
     });

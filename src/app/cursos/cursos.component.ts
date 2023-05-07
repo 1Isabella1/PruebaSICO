@@ -1,31 +1,37 @@
-import { Component, Input, ViewChild, AfterViewInit } from '@angular/core';
+import { Component, Input, ViewChild, AfterViewInit, OnInit } from '@angular/core';
 import { MatTable } from '@angular/material/table';
 import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-cursos',
-  templateUrl: './cursos.component.html',
+  templateUrl: './cursos.component.html', 
   styleUrls: ['./cursos.component.css']
 })
 
 
-export class CursosComponent implements AfterViewInit {
+export class CursosComponent implements OnInit {
+
   @Input() IdEstudiante: any;
-  constructor() { }
-  ngOnInit() {
+  constructor() {
+
   }
 
+  listacursos: Curso[] = [];
+  obtenercursos: Curso[] = [];
+  asignados: any[] = [];
+
+  ngOnInit() {
+    fetch('http://localhost:5274/api/Curso/ListaCurso').then((response) => response.json()).then(x => this.listacursos = x.response);
+    fetch('http://localhost:5274/api/EstudianteCurso/ListaEstudianteCurso').then((response) => response.json()).then(x => this.asignados = x.response);
+    //this.CargarCursos();
+    fetch(`http://localhost:5274/api/EstudianteCurso/ObtieneEstudianteCurso/${this.IdEstudiante}`).then((response) => response.json()).then(x => console.log("jgjg: ", x.response));
+    console.log(`http://localhost:5274/api/EstudianteCurso/ObtieneEstudianteCurso/${this.IdEstudiante}`, this.IdEstudiante)
+
+  }
+
+  
+
   columnasC: string[] = ['nombreCurso', 'descripcion', 'eliminar'];
-
-  listacursos: Curso[] = [new Curso('intro1', 'introprueba'),
-  new Curso('intro2', 'introprueba2'),
-  new Curso('intro3', 'intropruebafff'),
-  new Curso('intro4', 'introprueba2ffff'),
-  ];
-
-  datosC: Curso[] = [new Curso('intro1', 'introprueba'),
-    new Curso('intro2', 'introprueba2'),
-  ];
 
   cursoselect: Curso = new Curso("", "");
 
@@ -35,22 +41,25 @@ export class CursosComponent implements AfterViewInit {
     console.log(this.tabla2);
   }
 
+  CargarCursos() {
+    this.obtenercursos = this.IdEstudiante != null ? this.asignados.filter(x => x.identificacion == this.IdEstudiante) : this.asignados;
+  }
+
   agregar() {
+
     const str = new String(this.cursoselect).split(',')
     let repetido = true;
-    this.datosC.map(x => x.nombreCurso.includes(str[0]) && (repetido = false))
-    repetido && this.datosC.push(new Curso(str[0], str[1]));
+    this.listacursos.map(x => x.nombreCurso.includes(str[0]) && (repetido = false))
+    repetido && this.listacursos.push(new Curso(str[0], str[1]));
     this.tabla2.renderRows();
   }
 
   borrar(bor: string) {
 
-    this.datosC = this.datosC.filter(x => x.nombreCurso != bor );
+    this.listacursos = this.listacursos.filter(x => x.nombreCurso != bor);
     this.tabla2.renderRows();
-    
   }
 }
-
 
 export class Curso {
   constructor(public nombreCurso: string, public descripcion: string) {

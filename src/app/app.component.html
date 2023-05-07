@@ -21,52 +21,57 @@
 
   <!-- tabla estudiantes -->
 
-  <table mat-table [dataSource]="datos" class="table table-sm" #table1>
+<table mat-table [dataSource]="datos" class="table table-sm" #table1>
 
-    <ng-container matColumnDef="identificacion">
-      <th mat-header-cell *matHeaderCellDef> Identificación </th>
-      <td mat-cell *matCellDef="let estudiante"> {{estudiante.identificacion}} </td>
-    </ng-container>
+  <ng-container matColumnDef="identificacion">
+    <th mat-header-cell *matHeaderCellDef> Identificación </th>
+    <td mat-cell *matCellDef="let estudiante"> {{estudiante.identificacion}} </td>
+  </ng-container>
 
-    <ng-container matColumnDef="nombre">
-      <th mat-header-cell *matHeaderCellDef> Nombre </th>
-      <td mat-cell *matCellDef="let estudiante"> {{estudiante.nombre}} </td>
-    </ng-container>
+  <ng-container matColumnDef="nombre">
+    <th mat-header-cell *matHeaderCellDef> Nombre </th>
+    <td mat-cell *matCellDef="let estudiante"> {{estudiante.nombre1}} </td>
+  </ng-container>
 
-    <ng-container matColumnDef="apellido">
-      <th mat-header-cell *matHeaderCellDef> Apellido </th>
-      <td mat-cell *matCellDef="let estudiante"> {{estudiante.apellido}} </td>
-    </ng-container>
+  <ng-container matColumnDef="apellido">
+    <th mat-header-cell *matHeaderCellDef> Apellido </th>
+    <td mat-cell *matCellDef="let estudiante"> {{estudiante.apellido1}} </td>
+  </ng-container>
 
-    <!-- Button cursos -->
-    <ng-container matColumnDef="cursos">
-      <th mat-header-cell *matHeaderCellDef> Cursos </th>
-      <td mat-cell *matCellDef="let estudiante">
-        <button type="button" (click)="seleccionarId(estudiante.identificacion)" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-          Ver Cursos
-        </button>
-      </td>
-    </ng-container>
+  <ng-container matColumnDef="email">
+    <th mat-header-cell *matHeaderCellDef> Email </th>
+    <td mat-cell *matCellDef="let estudiante"> {{estudiante.email}} </td>
+  </ng-container>
 
-    <tr mat-header-row *matHeaderRowDef="columnas"></tr>
-    <tr mat-row *matRowDef="let row; columns: columnas;"></tr>
-  </table>
+  <!-- Button cursos -->
+  <ng-container matColumnDef="cursos">
+    <th mat-header-cell *matHeaderCellDef> Cursos </th>
+    <td mat-cell *matCellDef="let estudiante">
+      <button type="button" (click)="seleccionarId(estudiante.identificacion)" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+        Ver Cursos
+      </button>
+    </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="columnas"></tr>
+  <tr mat-row *matRowDef="let row; columns: columnas;"></tr>
+</table>
 
 
 
   <!-- Modal boton cursos-->
-  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          <app-cursos [IdEstudiante]="IdEstudiante"></app-cursos>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          </div>
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <app-cursos [IdEstudiante]="IdEstudiante"></app-cursos>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
         </div>
       </div>
     </div>
+  </div>
