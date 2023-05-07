@@ -10,9 +10,9 @@ import { HttpClient } from '@angular/common/http';
 })
 
 export class AppComponent implements OnInit {
-  //@Output()  IdEstudiante: EventEmitter<any> = new EventEmitter<any>();
 
   IdEstudiante: any;
+  asignados: any;
 
   //servicio: ApiService = new ApiService();
 
@@ -21,6 +21,7 @@ export class AppComponent implements OnInit {
 
   ngOnInit(){
     fetch('http://localhost:5274/api/Estudiante/ListaEstudiante').then((response) => response.json()).then(x => this.datos = this.datoscopia = x.response);
+
   }
 
   columnas: string[] = ['identificacion', 'nombre', 'apellido', 'email', 'cursos'];
@@ -41,14 +42,15 @@ export class AppComponent implements OnInit {
 
   seleccionarId(Id: string) {
     this.IdEstudiante = Id;
-    //this.IdEstudiante.emit(Id)
+    fetch(`http://localhost:5274/api/EstudianteCurso/ListaECurso/` + this.IdEstudiante).then((response) => response.json()).then(x => this.asignados = x.response)
   }
-
 
   buscarID(idEs: string) {
     this.datos = idEs != null ? this.datoscopia.filter(x => x.identificacion == idEs) : this.datoscopia;
     this.table1.renderRows();
   }
+
+
 
   limpiarfiltro() {
     this.datos = this.datoscopia;

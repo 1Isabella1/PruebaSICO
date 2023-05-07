@@ -11,25 +11,17 @@ import { NgForm } from '@angular/forms';
 
 export class CursosComponent implements OnInit {
 
-  @Input() IdEstudiante: any;
+  @Input() asignados: Curso[] = [];
+  @Input()  IdEstudiante: any;
   constructor() {
-
   }
 
   listacursos: Curso[] = [];
-  obtenercursos: Curso[] = [];
-  asignados: any[] = [];
-
-  ngOnInit() {
-    fetch('http://localhost:5274/api/Curso/ListaCurso').then((response) => response.json()).then(x => this.listacursos = x.response);
-    fetch('http://localhost:5274/api/EstudianteCurso/ListaEstudianteCurso').then((response) => response.json()).then(x => this.asignados = x.response);
-    //this.CargarCursos();
-    fetch(`http://localhost:5274/api/EstudianteCurso/ObtieneEstudianteCurso/${this.IdEstudiante}`).then((response) => response.json()).then(x => console.log("jgjg: ", x.response));
-    console.log(`http://localhost:5274/api/EstudianteCurso/ObtieneEstudianteCurso/${this.IdEstudiante}`, this.IdEstudiante)
-
-  }
-
+  //agregarpost: CursoE[] = [];
   
+  ngOnInit() {
+    fetch('http://localhost:5274/api/Curso/ListaCurso').then((response) => response.json()).then(x => this.listacursos = x.response)
+  }
 
   columnasC: string[] = ['nombreCurso', 'descripcion', 'eliminar'];
 
@@ -37,31 +29,63 @@ export class CursosComponent implements OnInit {
 
   @ViewChild(MatTable) tabla2!: MatTable<Curso>;
 
-  ngAfterViewInit() {
-    console.log(this.tabla2);
-  }
-
-  CargarCursos() {
-    this.obtenercursos = this.IdEstudiante != null ? this.asignados.filter(x => x.identificacion == this.IdEstudiante) : this.asignados;
-  }
-
+  /// Metodo para agregar cursos a un estudiante
   agregar() {
-
-    const str = new String(this.cursoselect).split(',')
+    let cursoagregar = new String(this.cursoselect).split(',')
     let repetido = true;
-    this.listacursos.map(x => x.nombreCurso.includes(str[0]) && (repetido = false))
-    repetido && this.listacursos.push(new Curso(str[0], str[1]));
-    this.tabla2.renderRows();
+    this.asignados.map(x => x.nombreCurso.includes(cursoagregar[0]) && (repetido = false))
+
+    if (!repetido) {
+      console.log("Ya existe")  //ventana emergente
+    }
+    else {
+      let agregarpost = new CursoE(this.IdEstudiante, cursoagregar[0])
+      console.log(agregarpost)
+
+      fetch('http://localhost:5274/api/EstudianteCurso/Agregar', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(agregarpost)
+      })
+        .then(response => response.json())
+        .then(data => console.log(data))
+        .catch(error => console.error(error))
+
+      this.asignados.push(new Curso(cursoagregar[0], cursoagregar[1]));
+      this.tabla2.renderRows();
+
+    }
+
   }
 
+  //borrar curso a un estudiante
   borrar(bor: string) {
+    let borrapost = new CursoE(this.IdEstudiante, bor);
+    console.log(borrapost)
+    fetch('http://localhost:5274/api/EstudianteCurso/Borrar', {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(borrapost)
+    })
+      .then(response => response.json())
+      .then(data => console.log(data))
+      .catch(error => console.error(error))
 
-    this.listacursos = this.listacursos.filter(x => x.nombreCurso != bor);
+    this.asignados = this.asignados.filter(x => x.nombreCurso != bor);
     this.tabla2.renderRows();
   }
 }
 
 export class Curso {
   constructor(public nombreCurso: string, public descripcion: string) {
+  }
+}
+
+export class CursoE {
+  constructor(public Identificacion: string, public nombreCurso: string) {
   }
 }

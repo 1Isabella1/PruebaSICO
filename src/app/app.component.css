@@ -1,6 +1,6 @@
-table {
-  width: 40%;
-  margin: 10%;
+/*table {
+  width: 100%;
+  margin: 5%;
 }
 
 .contenedor {
@@ -10,5 +10,39 @@ table {
   max-width: 600px;
   box-shadow: -1px 3px 66px 0px rgba(0,0,0,0.75);
   padding: 1rem;
+}*/
+
+
+
+table {
+  width: 20%;
+  border-collapse: collapse;
 }
+
+th, td {
+  border: 1px solid #ddd;
+  padding: 2px;
+  text-align: left;
+}
+
+.cont {
+  display: flex;
+  flex-direction: column;
+  margin: 1rem auto;
+  max-width: 800px;
+  box-shadow: -1px 3px 66px 0px rgba(0,0,0,0.75);
+  padding: 1rem;
+}
+
+
+.contenedor {
+  background-color: mintcream;
+  display: flex;
+  flex-direction: column;
+  margin: 1rem auto;
+  max-width: 300px;
+  box-shadow: -1px 3px 66px 0px rgba(0,0,0,0.75);
+  padding: 1rem;
+}
+
 
