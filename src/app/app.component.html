@@ -1,7 +1,7 @@
 <div class="contenedor">
-
+  <h4 class="modal-title">Busqueda por ID</h4>
   <mat-form-field>
-    <input matInput [(ngModel)]="estudianteselect.identificacion" class="form-control" type="number" placeholder="Ingrese ID">
+    <input matInput [(ngModel)]="estudianteselect.identificacion" class="form-control" type="text" placeholder="Ingrese ID">
   </mat-form-field>
   <div class="btn-group btn-sm" role="group" aria-label="Basic outlined example">
     <button class="btn btn-primary btn-sm" (click)="buscarID(estudianteselect.identificacion)">Buscar</button>
@@ -12,7 +12,7 @@
 <!-- tabla estudiantes -->
 <div class="cont">
 
-  <table mat-table [dataSource]="datos" class="table-d" #table1>
+  <table mat-table [dataSource]="datos" class="table" #table1>
 
     <ng-container matColumnDef="identificacion">
       <th mat-header-cell *matHeaderCellDef> Identificación </th>
@@ -36,8 +36,8 @@
 
     <!-- Button cursos -->
     <ng-container matColumnDef="cursos">
-      <th mat-header-cell *matHeaderCellDef> Cursos </th>
-      <td mat-cell *matCellDef="let estudiante">
+      <th mat-header-cell *matHeaderCellDef style="text-align: center"> Cursos </th>
+      <td mat-cell *matCellDef="let estudiante" style="text-align: center">
         <button type="button" (click)="seleccionarId(estudiante.identificacion)" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
           Ver Cursos
         </button>
@@ -55,7 +55,7 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+        <h4 class="modal-title">Cursos Asignados</h4>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">

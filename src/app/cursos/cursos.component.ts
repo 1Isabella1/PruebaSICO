@@ -17,6 +17,7 @@ export class CursosComponent implements OnInit {
   }
 
   listacursos: Curso[] = [];
+  mensajeError: any;
   //agregarpost: CursoE[] = [];
   
   ngOnInit() {
@@ -34,13 +35,20 @@ export class CursosComponent implements OnInit {
     let cursoagregar = new String(this.cursoselect).split(',')
     let repetido = true;
     this.asignados.map(x => x.nombreCurso.includes(cursoagregar[0]) && (repetido = false))
+    console.log(cursoagregar);
 
     if (!repetido) {
       console.log("Ya existe")  //ventana emergente
+      this.mensajeError = "El curso seleccionado ya se encuentra asignado"
     }
+
+    else if (cursoagregar.length === 1) {
+      this.mensajeError = "Selecciona un curso"
+      }
+
     else {
+      this.mensajeError = ""
       let agregarpost = new CursoE(this.IdEstudiante, cursoagregar[0])
-      console.log(agregarpost)
 
       fetch('http://localhost:5274/api/EstudianteCurso/Agregar', {
         method: 'POST',
@@ -57,7 +65,6 @@ export class CursosComponent implements OnInit {
       this.tabla2.renderRows();
 
     }
-
   }
 
   //borrar curso a un estudiante
